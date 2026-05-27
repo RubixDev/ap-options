@@ -1,0 +1,27 @@
+.head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1.5rem;
+}
+
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.range {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 6rem 1fr auto;
+}
+
+.flex-inline {
+  display: flex;
+  gap: 1rem;
+
+  & > * {
+    flex-basis: 100%;
+  }
+}

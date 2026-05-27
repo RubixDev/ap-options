@@ -1,0 +1,55 @@
+<button matButton="filled" (click)="fileImport.click()">
+  <mat-icon>upload</mat-icon>
+  Import File
+</button>
+<input
+  hidden
+  #fileImport
+  type="file"
+  accept=".yaml,.json,application/yaml,application/json"
+  (change)="importFile($event)"
+/>
+
+<form (submit)="exportFile($event)">
+  <mat-form-field>
+    <mat-label>Player Name</mat-label>
+    <input matInput [formField]="form.slot" />
+    @for (error of form.slot().errors(); track error.kind) {
+      <mat-error>{{ error.message }}</mat-error>
+    }
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Description</mat-label>
+    <textarea matInput [formField]="form.description"></textarea>
+    @for (error of form.description().errors(); track error.kind) {
+      <mat-error>{{ error.message }}</mat-error>
+    }
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Game</mat-label>
+    <mat-select [formField]="form.game">
+      @for (world of index.value() ?? []; track world.name) {
+        @if (!world.hidden) {
+          <mat-option [value]="world.game">{{ world.game }}</mat-option>
+        }
+      }
+    </mat-select>
+  </mat-form-field>
+
+  @if (worldSchema(); as schema) {
+    <app-game-options
+      [schema]="schema"
+      [initialValue]="form.options().value()"
+      (valueChange)="form.options().value.set($event)"
+    />
+  } @else {
+    <!-- TODO: loading spinner -->
+  }
+
+  <button type="submit" matButton="filled" [disabled]="form().invalid()">
+    <mat-icon>download</mat-icon>
+    Save YAML
+  </button>
+</form>

@@ -1,0 +1,147 @@
+<div class="head">
+  <span>
+    <strong>{{ option().display_name }}</strong>
+    <!-- TODO: better tooltip (markdown, line breaks, mobile friendly) -->
+    <i class="desc" [matTooltip]="option().description" matTooltipPosition="above">&nbsp;(?)</i>
+  </span>
+
+  <mat-slide-toggle
+    labelPosition="before"
+    [disabled]="!option().randomizable"
+    [checked]="form()().value() === 'random'"
+    (change)="toggleRandomize($event.checked)"
+    >Randomize</mat-slide-toggle
+  >
+</div>
+
+@let o = option();
+@switch (o.type) {
+  @case ('NamedRange') {
+    <div class="range">
+      <mat-form-field>
+        <mat-label>Value</mat-label>
+        <input matInput type="number" step="1" [formField]="asField(form())" />
+        @for (error of form()().errors(); track error.kind) {
+          <mat-error>{{ error.message }}</mat-error>
+        }
+      </mat-form-field>
+      <mat-slider [min]="o.min" [max]="o.max" step="1" discrete>
+        <input matSliderThumb [formField]="form()" />
+      </mat-slider>
+      <div>
+        <button type="button" matButton="tonal" [matMenuTriggerFor]="namedRangeMenu">
+          <mat-icon>build</mat-icon>
+          Select Preset
+        </button>
+        <mat-menu #namedRangeMenu="matMenu">
+          @for (preset of Object.entries(o.presets); track preset[0]) {
+            <button mat-menu-item (click)="form()().value.set(preset[1])">{{ preset[0] }}</button>
+          }
+        </mat-menu>
+      </div>
+    </div>
+  }
+
+  @case ('Range') {
+    <div class="range">
+      <mat-form-field>
+        <mat-label>Value</mat-label>
+        <input matInput type="number" step="1" [formField]="asField(form())" />
+        @for (error of form()().errors(); track error.kind) {
+          <mat-error>{{ error.message }}</mat-error>
+        }
+      </mat-form-field>
+      <mat-slider [min]="o.min" [max]="o.max" step="1" discrete>
+        <input matSliderThumb [formField]="form()" />
+      </mat-slider>
+    </div>
+  }
+
+  @case ('Toggle') {
+    <mat-slide-toggle [formField]="form()">Enable</mat-slide-toggle>
+  }
+
+  @case ('TextChoice') {
+    <div class="flex-inline">
+      <mat-form-field>
+        <mat-label>Preset</mat-label>
+        <mat-select [formField]="form()">
+          @for (choice of o.choices; track choice.name) {
+            <mat-option [value]="choice.value">{{ choice.display_name }}</mat-option>
+          }
+        </mat-select>
+        @for (error of form()().errors(); track error.kind) {
+          <mat-error>{{ error.message }}</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Custom Value</mat-label>
+        <input matInput [formField]="asField(form())" [type]="textChoiceValueType()" />
+        @for (error of form()().errors(); track error.kind) {
+          <mat-error>{{ error.message }}</mat-error>
+        }
+      </mat-form-field>
+    </div>
+  }
+
+  @case ('Choice') {
+    <mat-form-field>
+      <mat-label>Value</mat-label>
+      <mat-select [formField]="form()">
+        @for (choice of o.choices; track choice.name) {
+          <mat-option [value]="choice.value">{{ choice.display_name }}</mat-option>
+        }
+      </mat-select>
+      @for (error of form()().errors(); track error.kind) {
+        <mat-error>{{ error.message }}</mat-error>
+      }
+    </mat-form-field>
+  }
+
+  @case ('FreeText') {
+    <mat-form-field>
+      <mat-label>Value</mat-label>
+      <textarea matInput [formField]="asField(form())"></textarea>
+      @for (error of form()().errors(); track error.kind) {
+        <mat-error>{{ error.message }}</mat-error>
+      }
+    </mat-form-field>
+  }
+
+  @case ('OptionSet') {
+    <mat-form-field>
+      <mat-label>Values</mat-label>
+      <mat-select [formField]="form()" multiple>
+        @for (choice of o.options; track choice) {
+          <mat-option [value]="choice">{{ choice }}</mat-option>
+        }
+      </mat-select>
+      @for (error of form()().errors(); track error.kind) {
+        <mat-error>{{ error.message }}</mat-error>
+      }
+    </mat-form-field>
+  }
+
+  <!-- TODO: OptionList should technically allow for reordering, but not even the main archipelago site supports this yet -->
+  @case ('OptionList') {
+    <mat-form-field>
+      <mat-label>Values</mat-label>
+      <mat-select [formField]="form()" multiple>
+        @for (choice of o.options; track choice) {
+          <mat-option [value]="choice">{{ choice }}</mat-option>
+        }
+      </mat-select>
+      @for (error of form()().errors(); track error.kind) {
+        <mat-error>{{ error.message }}</mat-error>
+      }
+    </mat-form-field>
+  }
+
+  <!-- TODO: think of a good ui for OptionCounter -->
+
+  @default {
+    <i>Option is not (yet) editable in this UI</i>
+    <!-- TODO: raw yaml input for unsupported options -->
+  }
+}
