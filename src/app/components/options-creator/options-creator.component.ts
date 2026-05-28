@@ -18,6 +18,8 @@ interface IndexWorld {
   hidden: boolean
 }
 
+const BASE_URL = 'https://index.ap-options.rubixdev.de'
+
 @Component({
   selector: 'app-options-creator',
   imports: [
@@ -34,7 +36,7 @@ interface IndexWorld {
   standalone: true,
 })
 export class OptionsCreatorComponent {
-  protected readonly index = httpResource<IndexWorld[]>(() => '/index.json')
+  protected readonly index = httpResource<IndexWorld[]>(() => `${BASE_URL}/index.json`)
 
   private readonly model = signal<PlayerForm>({
     slot: '',
@@ -54,7 +56,7 @@ export class OptionsCreatorComponent {
       if (game === '') return undefined
       const worldName = this.index.value()?.find(w => w.game === game)?.name
       if (worldName === undefined) return undefined
-      return `/schema/${worldName}.json`
+      return `${BASE_URL}/${worldName}.json`
     }),
   )
   protected readonly worldSchema = computed(() => {
