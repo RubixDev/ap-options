@@ -27,11 +27,17 @@
     }
   </mat-form-field>
 
-  <mat-slide-toggle [(ngModel)]="showAd" [ngModelOptions]="{ standalone: true }"
-    >Show
-    <a href="https://archipelago.miraheze.org/wiki/After_Dark">After Dark</a>
-    games</mat-slide-toggle
-  >
+  <mat-slide-toggle [(ngModel)]="showAd" [ngModelOptions]="{ standalone: true }">
+    Show
+    <a
+      href="https://archipelago.miraheze.org/wiki/After_Dark"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      After Dark</a
+    >
+    games
+  </mat-slide-toggle>
 
   <mat-form-field>
     <mat-label>Game</mat-label>
