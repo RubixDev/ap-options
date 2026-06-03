@@ -10,6 +10,7 @@ import { MatInputModule } from '@angular/material/input'
 import { MatButtonModule } from '@angular/material/button'
 import { MatIconModule } from '@angular/material/icon'
 import { saveAs } from 'file-saver'
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 
 interface IndexWorld {
   name: string
@@ -28,6 +29,7 @@ const BASE_URL = 'https://index.ap-options.rubixdev.de'
     MatInputModule,
     MatButtonModule,
     MatIconModule,
+    MatProgressSpinnerModule,
     GameOptionsComponent,
     FormField,
   ],

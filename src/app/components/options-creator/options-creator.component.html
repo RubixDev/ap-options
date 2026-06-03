@@ -44,8 +44,8 @@
       [initialValue]="form.options().value()"
       (valueChange)="form.options().value.set($event)"
     />
-  } @else {
-    <!-- TODO: loading spinner -->
+  } @else if (form.game().value()) {
+    <div class="loading"><mat-spinner /></div>
   }
 
   <button type="submit" matButton="filled" [disabled]="form().invalid()">
