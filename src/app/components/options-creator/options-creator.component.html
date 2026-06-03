@@ -48,7 +48,11 @@
     <div class="loading"><mat-spinner /></div>
   }
 
-  <button type="submit" matButton="filled" [disabled]="form().invalid()">
+  <button
+    type="submit"
+    matButton="filled"
+    [disabled]="form().invalid() || worldSchema() === undefined"
+  >
     <mat-icon>download</mat-icon>
     Save YAML
   </button>
