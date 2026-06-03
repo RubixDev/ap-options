@@ -22,16 +22,18 @@ import { MatButtonModule } from '@angular/material/button'
 import { MatButtonToggleModule } from '@angular/material/button-toggle'
 import { FormsModule } from '@angular/forms'
 import { MatIconModule } from '@angular/material/icon'
+import { MatSlideToggleModule } from '@angular/material/slide-toggle'
 
 @Component({
   selector: 'app-game-options',
   imports: [
-    OptionGroupComponent,
-    MatExpansionModule,
     MatButtonModule,
     MatButtonToggleModule,
+    MatExpansionModule,
     MatIconModule,
+    MatSlideToggleModule,
     FormsModule,
+    OptionGroupComponent,
   ],
   templateUrl: './game-options.component.html',
   styleUrl: './game-options.component.scss',
@@ -61,6 +63,7 @@ export class GameOptionsComponent implements OnInit {
   protected readonly filterMask = computed(() =>
     this.filter().reduce((a, b) => a | b, Visibility.None),
   )
+  protected readonly showHidden = signal(false)
 
   protected readonly accordion = viewChild.required(MatAccordion)
 

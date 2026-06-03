@@ -12,7 +12,10 @@
     <mat-button-toggle [value]="Visibility.Spoiler">Spoiler</mat-button-toggle>
   </mat-button-toggle-group>
 
-  <!-- TODO: show hidden options, expand/collapse all -->
+  <div></div>
+  <div>
+    <mat-slide-toggle [(ngModel)]="showHidden">Show hidden options</mat-slide-toggle>
+  </div>
 
   <strong>Actions:</strong>
   <div class="action-buttons">
@@ -31,7 +34,12 @@
 @if (form) {
   <mat-accordion multi>
     @for (group of schema().groups; track group.name) {
-      <app-option-group [group]="group" [form]="form" [filter]="filterMask()" />
+      <app-option-group
+        [group]="group"
+        [form]="form"
+        [filter]="filterMask()"
+        [showHidden]="showHidden()"
+      />
     }
   </mat-accordion>
 }

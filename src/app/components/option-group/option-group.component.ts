@@ -16,8 +16,13 @@ export class OptionGroupComponent {
   readonly group = input.required<OptionGroup>()
   readonly form = input.required<FieldTree<Game>>()
   readonly filter = input(Visibility.All)
+  readonly showHidden = input(false)
 
   protected readonly filteredOptions = computed(() =>
-    this.group().options.filter(o => (o.visibility & this.filter()) !== 0),
+    this.group().options.filter(
+      o =>
+        (o.visibility & this.filter()) !== 0 ||
+        (this.showHidden() && o.visibility === Visibility.None),
+    ),
   )
 }
