@@ -27,10 +27,16 @@
     }
   </mat-form-field>
 
+  <mat-slide-toggle [(ngModel)]="showAd" [ngModelOptions]="{ standalone: true }"
+    >Show
+    <a href="https://archipelago.miraheze.org/wiki/After_Dark">After Dark</a>
+    games</mat-slide-toggle
+  >
+
   <mat-form-field>
     <mat-label>Game</mat-label>
     <mat-select [formField]="form.game">
-      @for (world of index.value() ?? []; track world.name) {
+      @for (world of filteredIndex() ?? []; track world.name) {
         @if (!world.hidden) {
           <mat-option [value]="world.game">{{ world.game }}</mat-option>
         }

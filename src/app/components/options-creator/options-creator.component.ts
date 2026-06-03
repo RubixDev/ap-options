@@ -11,12 +11,21 @@ import { MatButtonModule } from '@angular/material/button'
 import { MatIconModule } from '@angular/material/icon'
 import { saveAs } from 'file-saver'
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
+import { MatSlideToggleModule } from '@angular/material/slide-toggle'
+import { FormsModule } from '@angular/forms'
+
+type Tag = 'ad'
 
 interface IndexWorld {
   name: string
   game: string
   version: string
   hidden: boolean
+  sane_version?: string // this is always semver
+  display_name?: string
+  tags: Tag[]
+  wiki?: string
+  discord?: string
 }
 
 const BASE_URL = 'https://index.ap-options.rubixdev.de'
@@ -29,16 +38,24 @@ const BASE_URL = 'https://index.ap-options.rubixdev.de'
     MatInputModule,
     MatButtonModule,
     MatIconModule,
+    MatSlideToggleModule,
     MatProgressSpinnerModule,
-    GameOptionsComponent,
     FormField,
+    FormsModule,
+    GameOptionsComponent,
   ],
   templateUrl: './options-creator.component.html',
   styleUrl: './options-creator.component.scss',
   standalone: true,
 })
 export class OptionsCreatorComponent {
-  protected readonly index = httpResource<IndexWorld[]>(() => `${BASE_URL}/index.json`)
+  private readonly index = httpResource<IndexWorld[]>(() => `${BASE_URL}/index.json`)
+  protected readonly showAd = signal(false)
+  protected readonly filteredIndex = computed(() => {
+    const index = this.index.value()
+    if (index === undefined) return undefined
+    return index.filter(world => !world.tags?.includes('ad') || this.showAd())
+  })
 
   private readonly model = signal<PlayerForm>({
     slot: '',
