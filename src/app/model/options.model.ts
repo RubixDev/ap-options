@@ -36,6 +36,7 @@ export const Option = z.discriminatedUnion('type', [
   z.object({
     ...OptionBase.shape,
     type: z.literal('NamedRange'),
+    // TODO: allow advanced random values (e.g. `random-range-6-10`)
     default: z.union([z.literal('random'), z.int()]),
     min: z.int(),
     max: z.int(),
@@ -73,6 +74,7 @@ export const Option = z.discriminatedUnion('type', [
       z.object({
         name: z.string(),
         display_name: z.string(),
+        // TODO: be lenient and allow string values
         value: z.int(),
       }),
     ),

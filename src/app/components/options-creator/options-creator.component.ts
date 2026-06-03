@@ -13,20 +13,7 @@ import { saveAs } from 'file-saver'
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 import { MatSlideToggleModule } from '@angular/material/slide-toggle'
 import { FormsModule } from '@angular/forms'
-
-type Tag = 'ad'
-
-interface IndexWorld {
-  name: string
-  game: string
-  version: string
-  hidden: boolean
-  sane_version?: string // this is always semver
-  display_name?: string
-  tags: Tag[]
-  wiki?: string
-  discord?: string
-}
+import { IndexWorld } from '../../model/index.model'
 
 const BASE_URL = 'https://index.ap-options.rubixdev.de'
 
@@ -57,6 +44,8 @@ export class OptionsCreatorComponent {
     return index.filter(world => !world.tags?.includes('ad') || this.showAd())
   })
 
+  // TODO: save and load from local storage
+  // TODO: reset button
   private readonly model = signal<PlayerForm>({
     slot: '',
     description: 'YAML generated with ap-options.rubixdev.de',
@@ -69,11 +58,13 @@ export class OptionsCreatorComponent {
     required(path.game, { message: 'A game is required' })
   })
 
+  protected readonly indexWorld = computed(() => {
+    const game = this.form.game().value()
+    return this.index.value()?.find(w => w.game === game)
+  })
   private readonly rawWorldSchema = httpResource(
     computed(() => {
-      const game = this.form.game().value()
-      if (game === '') return undefined
-      const worldName = this.index.value()?.find(w => w.game === game)?.name
+      const worldName = this.indexWorld()?.name
       if (worldName === undefined) return undefined
       return `${BASE_URL}/${worldName}.json`
     }),

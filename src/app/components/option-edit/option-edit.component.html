@@ -2,7 +2,7 @@
   <span>
     <strong>{{ option().display_name }}</strong>
     <!-- TODO: better tooltip (markdown, line breaks, mobile friendly) -->
-    <i class="desc" [matTooltip]="option().description" matTooltipPosition="above">&nbsp;(?)</i>
+    <i [matTooltip]="option().description" matTooltipPosition="above">&nbsp;(?)</i>
   </span>
 
   <mat-slide-toggle

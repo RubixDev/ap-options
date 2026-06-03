@@ -23,6 +23,8 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle'
 import { FormsModule } from '@angular/forms'
 import { MatIconModule } from '@angular/material/icon'
 import { MatSlideToggleModule } from '@angular/material/slide-toggle'
+import { IndexWorld } from '../../model/index.model'
+import { MatTooltipModule } from '@angular/material/tooltip'
 
 @Component({
   selector: 'app-game-options',
@@ -32,6 +34,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle'
     MatExpansionModule,
     MatIconModule,
     MatSlideToggleModule,
+    MatTooltipModule,
     FormsModule,
     OptionGroupComponent,
   ],
@@ -41,6 +44,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle'
 })
 export class GameOptionsComponent implements OnInit {
   readonly schema = input.required<World>()
+  readonly indexWorld = input.required<IndexWorld>()
   readonly initialValue = input<Game>({})
 
   private readonly options = linkedSignal<Game>(() =>

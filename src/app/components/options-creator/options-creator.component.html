@@ -44,9 +44,12 @@
     </mat-select>
   </mat-form-field>
 
-  @if (worldSchema(); as schema) {
+  @let schema = worldSchema();
+  @let world = indexWorld();
+  @if (schema !== undefined && world !== undefined) {
     <app-game-options
       [schema]="schema"
+      [indexWorld]="world"
       [initialValue]="form.options().value()"
       (valueChange)="form.options().value.set($event)"
     />
