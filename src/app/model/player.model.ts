@@ -1,7 +1,10 @@
 import * as z from 'zod'
 import YAML from 'yaml'
 
-export const Game = z.record(z.string(), z.unknown())
+export const Game = z.record(
+  z.string(),
+  z.codec(z.unknown(), z.unknown(), { decode: v => v, encode: v => v ?? undefined }),
+)
 export type Game = z.infer<typeof Game>
 
 export const Player = z
