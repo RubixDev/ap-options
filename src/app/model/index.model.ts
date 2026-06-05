@@ -10,4 +10,5 @@ export interface IndexWorld {
   tags: Tag[]
   wiki?: string
   discord?: string
+  download?: string
 }
