@@ -1,0 +1,7 @@
+<mat-form-field>
+  <mat-label>{{ label() }}</mat-label>
+  <textarea matInput rows="4" [(ngModel)]="rawValue" [errorStateMatcher]="matcher"></textarea>
+  @for (error of allErrors(); track error.kind) {
+    <mat-error>{{ error.message }}</mat-error>
+  }
+</mat-form-field>

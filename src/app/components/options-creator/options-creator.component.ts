@@ -1,5 +1,5 @@
 import { httpResource } from '@angular/common/http'
-import { Component, computed, effect, signal } from '@angular/core'
+import { Component, computed, effect, linkedSignal, signal } from '@angular/core'
 import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatSelectModule } from '@angular/material/select'
 import { GameOptionsComponent } from '../game-options/game-options.component'
@@ -69,7 +69,7 @@ export class OptionsCreatorComponent {
       return `${BASE_URL}/${worldName}.json`
     }),
   )
-  protected readonly worldSchema = computed(() => {
+  protected readonly worldSchema = linkedSignal(() => {
     const json = this.rawWorldSchema.value()
     if (json === undefined) return undefined
     return World.parse(json)
@@ -89,6 +89,8 @@ export class OptionsCreatorComponent {
     const text = await file.text()
     console.log('read text:', text)
     this.model.set(PlayerYaml.parse(text))
+    // force update game options form
+    this.worldSchema.update(schema => (schema === undefined ? undefined : { ...schema }))
   }
 
   protected exportFile(event: Event) {

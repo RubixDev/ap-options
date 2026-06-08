@@ -10,6 +10,7 @@ import { MatIconModule } from '@angular/material/icon'
 import { MatInputModule } from '@angular/material/input'
 import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatSelectModule } from '@angular/material/select'
+import { YamlEditorComponent } from '../yaml-editor/yaml-editor.component'
 
 @Component({
   selector: 'app-option-edit',
@@ -24,6 +25,7 @@ import { MatSelectModule } from '@angular/material/select'
     MatFormFieldModule,
     MatSelectModule,
     FormField,
+    YamlEditorComponent,
   ],
   templateUrl: './option-edit.component.html',
   styleUrl: './option-edit.component.scss',
