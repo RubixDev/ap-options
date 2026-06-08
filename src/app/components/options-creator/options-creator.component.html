@@ -41,7 +41,7 @@
 
   <mat-form-field>
     <mat-label>Game</mat-label>
-    <mat-select [formField]="form.game">
+    <mat-select [formField]="form.game" (selectionChange)="form.options().value.set({})">
       @for (world of filteredIndex() ?? []; track world.name) {
         @if (!world.hidden) {
           <mat-option [value]="world.game">{{ world.game }}</mat-option>
