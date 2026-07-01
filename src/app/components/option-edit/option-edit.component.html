@@ -1,9 +1,5 @@
 <div class="head">
-  <span>
-    <strong>{{ option().display_name }}</strong>
-    <!-- TODO: better tooltip (markdown, line breaks, mobile friendly) -->
-    <i [matTooltip]="option().description" matTooltipPosition="above">&nbsp;(?)</i>
-  </span>
+  <strong>{{ option().display_name }}</strong>
 
   <mat-slide-toggle
     labelPosition="before"
@@ -13,6 +9,11 @@
     >Randomize</mat-slide-toggle
   >
 </div>
+
+<label>
+  <input type="checkbox" class="toggle-desc" />
+  <div class="desc" [innerHTML]="markdownDesc()"></div>
+</label>
 
 @let o = option();
 @switch (o.type) {

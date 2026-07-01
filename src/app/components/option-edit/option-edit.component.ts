@@ -1,6 +1,5 @@
 import { Component, computed, effect, input } from '@angular/core'
 import { Option } from '../../model/options.model'
-import { MatTooltipModule } from '@angular/material/tooltip'
 import { Field, FieldTree, FormField } from '@angular/forms/signals'
 import { MatSlideToggleModule } from '@angular/material/slide-toggle'
 import { MatSliderModule } from '@angular/material/slider'
@@ -11,11 +10,11 @@ import { MatInputModule } from '@angular/material/input'
 import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatSelectModule } from '@angular/material/select'
 import { YamlEditorComponent } from '../yaml-editor/yaml-editor.component'
+import { marked } from 'marked'
 
 @Component({
   selector: 'app-option-edit',
   imports: [
-    MatTooltipModule,
     MatSlideToggleModule,
     MatSliderModule,
     MatButtonModule,
@@ -35,6 +34,7 @@ export class OptionEditComponent {
   readonly option = input.required<Option>()
   readonly form = input.required<FieldTree<unknown>>()
 
+  protected readonly markdownDesc = computed(() => marked.parse(this.option().description))
   protected readonly textChoiceValueType = computed(() =>
     typeof this.option().default === 'number' ? 'number' : 'text',
   )

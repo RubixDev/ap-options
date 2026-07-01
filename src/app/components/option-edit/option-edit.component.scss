@@ -11,6 +11,56 @@
   gap: 0.5rem;
 }
 
+label {
+  cursor: pointer;
+}
+
+.toggle-desc {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.desc {
+  position: relative;
+  font-size: 0.9em;
+  line-height: 1.5;
+  padding-left: 1rem;
+  display: inline-block;
+
+  &::before {
+    content: '';
+    display: block;
+    position: absolute;
+    background-color: currentColor;
+    opacity: 0.5;
+    width: 0.25rem;
+    left: 0;
+    top: 0;
+    bottom: 0;
+  }
+
+  ::ng-deep p {
+    margin-block: 0.5em;
+  }
+
+  .toggle-desc:not(:checked) ~ & {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow-y: hidden;
+
+    &::after {
+      content: '';
+      display: block;
+      position: absolute;
+      inset: 0;
+      box-shadow: 0 -1.75rem 1rem -1rem var(--mat-sys-surface) inset;
+    }
+  }
+}
+
 .range {
   display: grid;
   gap: 1rem;
